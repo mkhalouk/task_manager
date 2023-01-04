@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://USERNAME:PASSWORD@localhost:5432/task-manager-graphql?schema=public"
+  url      = "postgresql://ynshdf@localhost:5432/task-manager-graphql?schema=public"
 }
 
 generator client {
@@ -16,9 +16,60 @@ generator typegraphql {
 
 model User {
   id              String  @default(cuid()) @id
+  name            String
+  password            String
+  password_digest            String
+  active Boolean
+  preferences Json
   email           String  @unique
+  last_sign_in_at DateTime
+  created_at DateTime
+  updated_at DateTime
   /// @TypeGraphQL.omit(output: true)
-  password        String
   /// @TypeGraphQL.omit(output: true, input: true)
-  password_digest   String
+}
+
+model Comment {
+  id     String  @default(cuid()) @id
+  owner_id String?
+  target_id String
+  target_type String[]
+  parent_id String
+  content String
+  created_at DateTime
+  updated_at DateTime
+}
+
+model Notification {
+  id  String  @default(cuid()) @id
+  user_id String
+  action_id String
+  readed_at DateTime
+}
+
+model Action {
+  id  String  @default(cuid()) @id
+  group String[]
+  name  String[]
+  created_at DateTime
+  target_id String
+  target_type String[]
+}
+
+model Assignee {
+  id  String  @default(cuid()) @id
+  task_id String
+  user_id String
+  created_at DateTime
+}
+
+model Task {
+  id  String  @default(cuid()) @id
+  title String
+  description String
+  owner_id  String
+  due_at DateTime
+  created_at DateTime
+  updated_at DateTime
+  state String[]
 }

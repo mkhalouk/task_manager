@@ -3,7 +3,7 @@ import * as TypeGraphQL from "type-graphql";
 import { ApolloServer } from "apollo-server";
 import { PrismaClient } from "@prisma/client";
 import { WebSocketServer } from 'ws';
-
+import {graphqlFields} from 'graphql-fields';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { resolvers as generatedResolvers } from "./prisma/generated/type-graphql";
 
