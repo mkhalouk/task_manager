@@ -4,6 +4,14 @@
     "module": "commonjs",
     "lib": ["es2018", "esnext.asynciterable"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+    "rootDirs": ["src"],
+
+    "outDir": "dist",
+
+    "moduleResolution": "node",
+
+    "esModuleInterop": true,
+
+    "types": ["node"]  }
 }

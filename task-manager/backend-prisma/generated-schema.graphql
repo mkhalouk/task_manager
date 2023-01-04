@@ -1120,10 +1120,6 @@ input StringWithAggregatesFilter {
   startsWith: String
 }
 
-type Subscription {
-  hello: String!
-}
-
 type Task {
   created_at: DateTime!
   description: String!
