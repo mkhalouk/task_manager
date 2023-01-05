@@ -2,11 +2,31 @@ import "reflect-metadata";
 import * as TypeGraphQL from "type-graphql";
 import { ApolloServer } from "apollo-server";
 import { PrismaClient } from "@prisma/client";
-import { WebSocketServer } from 'ws';
-import { useServer } from 'graphql-ws/lib/use/ws';
 import { resolvers as generatedResolvers } from "./prisma/generated/type-graphql";
 
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+
+
+
+
+
+
+const express = require('express')
+const app = express()
+const port = 5000
+
+app.get('/hello', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+
+})
+
+
+
+
 
 interface Context {
   prisma: PrismaClient;
@@ -37,11 +57,7 @@ async function main() {
     context: (): Context => ({ prisma }),
     introspection: true,
   });
-  const wsServer = new WebSocketServer({
-    server: server.httpServer,
-    path: '/subscriptions',
-  });
-  const serverCleanup = useServer({ schema }, wsServer);
+  
 
   const { port } = await server.listen(4000);
   console.log(`GraphQL is listening on ${port}!`);

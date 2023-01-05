@@ -12,9 +12,7 @@ async function main() {
             target_id: "trgtid",
             target_type: ["typetrg"]
         },
-    });
-    console.log(action_1);
-    
+    });    
 }
 main()
     .then(async () => {
