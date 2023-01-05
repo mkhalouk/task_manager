@@ -6,28 +6,6 @@ import { resolvers as generatedResolvers } from "./prisma/generated/type-graphql
 
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
-
-
-
-
-
-const express = require('express')
-const app = express()
-const port = 5000
-
-app.get('/hello', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-
-})
-
-
-
-
-
 interface Context {
   prisma: PrismaClient;
 }
