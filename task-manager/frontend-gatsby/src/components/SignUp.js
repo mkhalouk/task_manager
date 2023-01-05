@@ -20,8 +20,8 @@ const SignUp = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    signUp({ data : { name : "ghqqqqqqqq", password : "jhq", password_digest : "ddhhhhhhhdd", active : true, preferences : {}, 
-    email : "jhhhhhhhhh@mail.com", last_sign_in_at : "2022-05-01", created_at : "2022-05-01", updated_at : "2022-05-01"} })
+    signUp({variables : { data : { name : "ghqqqqqqqq", password : "jhq", password_digest : "ddhhhhhhhdd", active : true, preferences : {}, 
+    email : "jhhhhhhhhh@mail.com", last_sign_in_at : "2022-05-01", created_at : "2022-05-01", updated_at : "2022-05-01"}}} )
       .then((payload) => {
         User.set('current', payload)
         navigate('/')
