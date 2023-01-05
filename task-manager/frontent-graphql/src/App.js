@@ -32,7 +32,7 @@ export default class App extends React.Component {
     console.log("fdsfsdf")
     return (
       <div >
-        fejedbfksdbfkjdssqdsqdsqdds
+        
       </div>
     );
   }
