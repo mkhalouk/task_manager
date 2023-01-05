@@ -31,6 +31,9 @@ async function main() {
 
   const prisma = new PrismaClient();
   const server = new ApolloServer({
+    cors: {
+      origin: ['http://localhost:8000' , 'https://studio.apollographql.com'],            // <- allow request from all domains
+      credentials: true},
     schema,
     context: (): Context => ({ prisma }),
     introspection: true,
