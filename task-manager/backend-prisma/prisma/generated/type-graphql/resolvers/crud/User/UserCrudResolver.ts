@@ -20,6 +20,7 @@ import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
 import { AggregateUser } from "../../outputs/AggregateUser";
 import { UserGroupBy } from "../../outputs/UserGroupBy";
 
+
 @TypeGraphQL.Resolver(_of => User)
 export class UserCrudResolver {
   @TypeGraphQL.Query(_returns => AggregateUser, {
@@ -48,6 +49,7 @@ export class UserCrudResolver {
   })
   async createOneUser(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: CreateOneUserArgs): Promise<User> {
     const { _count } = transformInfoIntoPrismaArgs(info);
+    
     return getPrismaFromContext(ctx).user.create({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),

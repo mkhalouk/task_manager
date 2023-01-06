@@ -16,12 +16,16 @@ const SignUp = () => {
 
   const [signUp] = useMutation(CREATE_USER_MUTATION)
 
+  const EMPTY_STRING = ""
+  const EMTY_OBJECT = {}
+  const EMTY_BOOL = false
+
 
   const onSubmit = (e) => {
     e.preventDefault()
 
-    signUp({variables : { data : { name : "ghqqqqqqqq", password : "jhq", password_digest : "ddhhhhhhhdd", active : true, preferences : {}, 
-    email : "jhhhhhhhhh@mail.com", last_sign_in_at : "2022-05-01", created_at : "2022-05-01", updated_at : "2022-05-01"}}} )
+    signUp({variables : { data : { name : name, password : password, password_digest : EMPTY_STRING, active : EMTY_BOOL, preferences : EMTY_OBJECT, 
+    email : email, last_sign_in_at : EMPTY_STRING, created_at : EMPTY_STRING, updated_at : EMPTY_STRING }}} )
       .then((payload) => {
         User.set('current', payload)
         navigate('/')
@@ -48,6 +52,7 @@ const SignUp = () => {
         break
     }
   }
+
 
   return (
     <div className="col">
