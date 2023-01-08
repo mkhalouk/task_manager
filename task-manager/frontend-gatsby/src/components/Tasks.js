@@ -64,10 +64,12 @@ const Tasks = () => {
               <th>State</th>
               <th>Due Date</th>
               <th>Assignee</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
           {tasks.map((item, i) => {
+            console.log(item.id);
                     return (
                       <tr key={item.id} >
                       <td>{item.title}</td>
@@ -76,6 +78,10 @@ const Tasks = () => {
                       </td>
                       <td>{item.due_at}</td>
                       <td>{currentUserName}</td>
+                      <td>
+                        <Button variant="primary" onClick={(e) => navigate('tasks/task/editState?id={item.id}')}> Modifier</Button> {' '}
+                        <Button variant="primary" onClick={(e) => navigate('tasks/task/comment')}> Commenter</Button> {' '}
+                      </td>
                     </tr>
                     );
                 })}
