@@ -133,3 +133,14 @@ mutation UpdateOneTask($data: TaskUpdateInput!, $where: TaskWhereUniqueInput!) {
   }
 }
 `
+export const CREATE_COMMENT_MUTATION = gql`
+mutation Mutation($data: CommentCreateInput!) {
+  createOneComment(data: $data) {
+    owner_id
+    created_at
+    updated_at
+    content
+    target_id
+  }
+}
+`

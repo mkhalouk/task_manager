@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { navigate } from '../utils/navigate';
 
 
-import { GET_COMMENNT_BY_TASK_ID } from 'store/GraphqlQueries'
+import { GET_COMMENNT_BY_TASK_ID, CREATE_COMMENT_MUTATION } from 'store/GraphqlQueries'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 
 
@@ -12,11 +13,12 @@ import User from 'store/User'
 
 let comments = []
 
-const CreateTask = () => {
+const CreateComment = () => {
     const inputArr = [];
 
+    const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
 
-    const currentUser = User.get('current', 'name')
+    const currentUser = User.get('current')
 
 
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -36,6 +38,7 @@ const CreateTask = () => {
 
 
     const addInput = () => {
+        document.querySelector('#addCommentBtn').disabled = true;
         setArr(s => {
             return [
                 ...s,
@@ -53,7 +56,6 @@ const CreateTask = () => {
         setArr(s => {
             const newArr = s.slice();
             newArr[index].value = e.target.value;
-            console.log(newArr)
             return newArr;
         });
     }
@@ -75,23 +77,47 @@ const CreateTask = () => {
         }
     }
 
+    const onSubmit = (e) => {
+        e.preventDefault()
+        createComment({
+            variables: {
+                data: {
+                    content: arr[0].value,
+                    created_at: new Date(Date.now()).toLocaleString('en-GB', { timeZone: 'UTC' }),
+                    updated_at: new Date(Date.now()).toLocaleString('en-GB', { timeZone: 'UTC' }),
+                    owner_id: currentUser.id,
+                    parent_id: "",
+                    target_id: params.id
+                }
+            }
+        })
+            .then((payload) => {
+                navigate(`/tasks/task/comment/?id=${params.id}`)
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            })
+
+        return false
+    }
+
     if (loading) return null;
 
     if (error) return `Error! ${error}`;
-
+console.log(data);
     if (data) {
         comments = [...data.comments]
         return (
             <div className="col">
-                <input variant="primary" type="button" value="AddComment" onClick={addInput}></input>
+                <input id="addCommentBtn" variant="primary" type="button" value="AddComment" onClick={addInput}></input>
 
                 {comments.map((item, i) => {
                     return (
                         <Card style={{ width: '80vw' }}>
                             <Card.Body>
-                                <Card.Title>{currentUser}</Card.Title>
+                                <Card.Title>{currentUser.name}</Card.Title>
                                 <Card.Text>{item.content}</Card.Text>
-                                <Button variant="primary">Reply</Button>
                             </Card.Body>
                         </Card>
                     );
@@ -109,7 +135,7 @@ const CreateTask = () => {
                             size={100}
                             style={{ marginBottom: "20px", marginTop: "20px", display: "grid" }}
                         />
-                        <button>submit</button>
+                        <button onClick={onSubmit}>submit</button>
                         </div>
                     );
                 })}
@@ -123,4 +149,4 @@ const CreateTask = () => {
 
 }
 
-export default CreateTask
+export default CreateComment
