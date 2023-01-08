@@ -3,6 +3,8 @@ import * as TypeGraphQL from "type-graphql";
 import { ApolloServer } from "apollo-server";
 import { PrismaClient } from "@prisma/client";
 import { resolvers as generatedResolvers } from "./prisma/generated/type-graphql";
+import { customResolvers } from "./CustomResolvers/index";
+
 
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
@@ -16,8 +18,8 @@ const pubSub = new RedisPubSub({
 });
 
 
-
 const resolvers = [
+  ...customResolvers,
   ...generatedResolvers,
 ] as TypeGraphQL.NonEmptyArray<Function>;
 

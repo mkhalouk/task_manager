@@ -14,6 +14,10 @@ module.exports = {
       label: 'Home',
       path: '/',
     },
+    {
+      label: 'Signup',
+      path: '/sign-up',
+    },
   ],
   author: {
     name: 'Efficom Tech D',

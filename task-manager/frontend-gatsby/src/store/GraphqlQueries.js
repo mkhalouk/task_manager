@@ -15,7 +15,7 @@ export const getClient = () => {
     headers: {
       user: User.get('account', 'id') || null,
     },
-    
+
   })
 }
 
@@ -36,20 +36,81 @@ export const GET_CURRENT_USER = gql`
   ${USER_FRAGMENT}
 `
 
-export const LOGIN_USER_MUTATION = gql`
-  mutation loginUser($email: String!, $password: String!) {
-    loginUser(where: { email: $email, password: $password }) {
+export const GET_USER_BY_NAME_QUERY = gql`
+  query User($where: UserWhereUniqueInput!) {
+    user(where: $where) {
       id
-      name
     }
+}
+`
+
+export const GET_USERS_BY_NAME_QUERY = gql`
+  query Users($where: UserWhereInput!) {
+    users(where: $where) {
+      id
+    }
+}
+`
+
+export const GET_TASKS_BY_TASK_ID = gql`
+query Query($where : TaskWhereInput) {
+  tasks(where : $where) {
+    title
+    state
+    due_at  
   }
-  ${USER_FRAGMENT}
+}
+`
+
+export const GET_TASKS_ASSIGNED_BY_USER_ID = gql`
+query Assignees($where: AssigneeWhereInput) {
+  assignees(where: $where) {
+    task_id
+  }
+}
+`
+
+export const LOGIN_USER_MUTATION = gql`
+mutation LoginUser($where: UserWhereInput) {
+  loginUser(where: $where) {
+    id,
+    email
+    name
+  }
+}
 `
 
 export const CREATE_USER_MUTATION = gql`
 mutation createOneUser($data : UserCreateInput!) {
   createOneUser(data: $data) {
+    id
+    email
     name
+  }
+}
+`
+
+export const CREATE_TASK_MUTATION = gql`
+mutation CreateOneTask($data: TaskCreateInput!) {
+  createOneTask(data: $data) {
+    id
+    title
+    description
+    owner_id
+    due_at
+    created_at
+    updated_at
+    state
+  }
+}
+`
+export const CREATE_ASSIGNEE_MUTATION = gql`
+mutation CreateOneAssignee($data: AssigneeCreateInput!) {
+  createOneAssignee(data: $data) {
+    created_at
+    id
+    task_id
+    user_id
   }
 }
 `

@@ -6,7 +6,9 @@ import Button from 'react-bootstrap/Button'
 
 import User from 'store/User'
 import { LOGIN_USER_MUTATION } from 'store/GraphqlQueries'
-import { navigate } from 'gatsby'
+
+import { navigate } from '../utils/navigate';
+
 
 const SignIn = () => {
   const [email, setEmail] = React.useState(User.get('new', 'email'))
@@ -33,9 +35,24 @@ const SignIn = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    signIn({ variables: { email: email, password: password } })
+    signIn({ variables: 
+      {
+        where: {
+          AND: [
+            {
+              email: {
+                equals: email
+              },
+              password: {
+                equals: password
+              }
+            }
+          ]
+        }
+      } })
       .then((payload) => {
-        User.set('current', payload)
+        console.log(payload.data)
+        User.set('current', payload.data.loginUser)
         navigate('/')
       })
       .catch((error) => {

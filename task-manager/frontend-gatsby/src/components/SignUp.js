@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button'
 
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_USER_MUTATION } from 'store/GraphqlQueries'
+import { navigate } from '../utils/navigate';
+
 
 
 import User from 'store/User'
@@ -27,7 +29,7 @@ const SignUp = () => {
     signUp({variables : { data : { name : name, password : password, password_digest : EMPTY_STRING, active : EMTY_BOOL, preferences : EMTY_OBJECT, 
     email : email, last_sign_in_at : EMPTY_STRING, created_at : EMPTY_STRING, updated_at : EMPTY_STRING }}} )
       .then((payload) => {
-        User.set('current', payload)
+        User.set('current', payload.data.createOneUser)
         navigate('/')
       })
       .catch((error) => {

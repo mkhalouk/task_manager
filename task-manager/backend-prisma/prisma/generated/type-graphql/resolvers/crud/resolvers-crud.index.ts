@@ -4,4 +4,4 @@ export { CommentCrudResolver } from "./Comment/CommentCrudResolver";
 export { NotificationCrudResolver } from "./Notification/NotificationCrudResolver";
 export { TaskCrudResolver } from "./Task/TaskCrudResolver";
 export { UserCrudResolver } from "./User/UserCrudResolver";
-export { CustomUserCrudResolver } from "./User/Custom/CustomUserCrudResolver";
+

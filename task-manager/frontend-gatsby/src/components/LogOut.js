@@ -2,7 +2,7 @@ import React from 'react'
 
 import Button from 'react-bootstrap/Button'
 
-import { navigate } from 'gatsby'
+import { navigate } from '../utils/navigate';
 
 import User from 'store/User'
 

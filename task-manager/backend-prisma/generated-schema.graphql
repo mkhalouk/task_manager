@@ -689,6 +689,7 @@ type Mutation {
   deleteOneNotification(where: NotificationWhereUniqueInput!): Notification
   deleteOneTask(where: TaskWhereUniqueInput!): Task
   deleteOneUser(where: UserWhereUniqueInput!): User
+  loginUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): User!
   updateManyAction(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): AffectedRowsOutput!
   updateManyAssignee(data: AssigneeUpdateManyMutationInput!, where: AssigneeWhereInput): AffectedRowsOutput!
   updateManyComment(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): AffectedRowsOutput!

@@ -12,7 +12,7 @@ const AppNavbar = () => {
     return findImage('logo.svg').src
   }
 
-  const currentUser = User.get('current')
+  const currentUser = User.get('current', 'name')
 
   return (
     <Navbar id="main-navbar" expand="lg" variant="light">
@@ -27,7 +27,7 @@ const AppNavbar = () => {
               {'Signed in as: '}
               <strong>
                 <a title="LogOut" href="/logout/">
-                  {currentUser.name}
+                  {currentUser}
                 </a>
               </strong>
             </Navbar.Text>
