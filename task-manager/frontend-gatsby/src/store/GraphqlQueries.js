@@ -115,3 +115,10 @@ mutation CreateOneAssignee($data: AssigneeCreateInput!) {
   }
 }
 `
+export const UPDATE_TASK_STATE_MUTATION = gql`
+mutation UpdateOneTask($data: TaskUpdateInput!, $where: TaskWhereUniqueInput!) {
+  updateOneTask(data: $data, where: $where) {
+    state
+  }
+}
+`

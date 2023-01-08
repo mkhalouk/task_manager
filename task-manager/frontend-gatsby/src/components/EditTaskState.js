@@ -6,23 +6,22 @@ import { useMutation, useQuery } from '@apollo/react-hooks'
 import { navigate } from '../utils/navigate';
 
 
-import { CREATE_TASK_MUTATION, CREATE_ASSIGNEE_MUTATION,  GET_USER_BY_NAME_QUERY } from 'store/GraphqlQueries'
+import { UPDATE_TASK_STATE_MUTATION,  GET_USER_BY_NAME_QUERY } from 'store/GraphqlQueries'
 
 import User from 'store/User'
 
-const CreateTask = () => {
+const EditTask = () => {
 
     const EMPTY_STRING = ""
     const EMTY_OBJECT = {}
     const EMTY_BOOL = false
 
-    const [titre, setTitre] = React.useState()
-    const [description, setDescription] = React.useState()
     const [progess, setProgess] = React.useState()
     const [id, setId] = React.useState()
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
 
-    const [createTask] = useMutation(CREATE_TASK_MUTATION)
-    const [AssignTask] = useMutation(CREATE_ASSIGNEE_MUTATION)
+    const [editTaskState] = useMutation(UPDATE_TASK_STATE_MUTATION)
     const { loading, error, data } = useQuery(GET_USER_BY_NAME_QUERY, {
         variables: { where: { email: User.get('new', 'email') } }
     });
@@ -30,13 +29,10 @@ const CreateTask = () => {
     const onInputChange = (e) => {
 
         switch (e.target.name) {
-            case 'titre':
-                setTitre(e.target.value)
-                break
-            case 'description':
-                setDescription(e.target.value)
-                break
             case 'progress':
+                setProgess(e.target.value)
+                break
+            case 'id':
                 setProgess(e.target.value)
                 break
         }
@@ -45,34 +41,20 @@ const CreateTask = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        createTask({
+        editTaskState({
             variables: {
                 data: {
-                    title: titre, description: description, owner_id: data.user.id,
-                    due_at: EMPTY_STRING, created_at: EMPTY_STRING, updated_at: EMPTY_STRING, state: { set: [progess] }
+                    state: {
+                        set: [progess]
+                    }
+                },
+                where: {
+                    id: params.id
                 }
             }
         })
             .then((payload) => {
-                const data = payload.data.createOneTask;
-                AssignTask({
-                    variables: {
-                        data: {
-                            created_at: new Date(Date.now()).toLocaleString('en-GB', { timeZone: 'UTC' }) , task_id: data.id, user_id : data.owner_id, 
-                        }
-                    }
-                }).then((data) => {
-                    const taskId = payload.data.createOneTask.id
-                    const path = window.location.pathname
-                    if (path.includes("assign")) {
-                        navigate(`/tasks/task/assign?taskId=${taskId}&action=assign`)
-                    } else {
-                        navigate('/')
-    
-                    }   
-                })
-                
-                //User.set('current', payload)
+                navigate('/')
             })
             .catch((error) => {
                 console.log(error)
@@ -90,26 +72,6 @@ const CreateTask = () => {
     if (data) return (
         <div className="col">
             <Form onSubmit={onSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicTitle">
-                    <Form.Label>Titre</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="titre"
-                        placeholder="Your title here"
-                        onChange={onInputChange}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicText">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="description"
-                        placeholder="Enter description"
-                        onChange={onInputChange}
-                    />
-                </Form.Group>
-
-
                 <Form.Group className="mb-3" controlId="formBasicSelect">
                     <Form.Label>Progrès</Form.Label>
                     <Form.Select name="progress" onChange={onInputChange} aria-label="Default select">
@@ -130,4 +92,4 @@ const CreateTask = () => {
 
 }
 
-export default CreateTask
+export default EditTask
