@@ -55,22 +55,23 @@ const CreateTask = () => {
         })
             .then((payload) => {
                 const data = payload.data.createOneTask;
-                console.log(data)
                 AssignTask({
                     variables: {
                         data: {
                             created_at: new Date(Date.now()).toLocaleString('en-GB', { timeZone: 'UTC' }) , task_id: data.id, user_id : data.owner_id, 
                         }
                     }
+                }).then((data) => {
+                    const taskId = payload.data.createOneTask.id
+                    const path = window.location.pathname
+                    if (path.includes("assign")) {
+                        navigate(`/tasks/task/assign?taskId=${taskId}&action=assign`)
+                    } else {
+                        navigate('/')
+    
+                    }   
                 })
-                const taskId = payload.data.createOneTask.id
-                const path = window.location.pathname
-                /*if (path.includes("assign")) {
-                    navigate(`/tasks/task/assign?taskId=${taskId}&action=assign`)
-                } else {
-                    navigate('/')
-
-                }*/
+                
                 //User.set('current', payload)
             })
             .catch((error) => {

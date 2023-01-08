@@ -55,6 +55,7 @@ export const GET_USERS_BY_NAME_QUERY = gql`
 export const GET_TASKS_BY_TASK_ID = gql`
 query Query($where : TaskWhereInput) {
   tasks(where : $where) {
+    id
     title
     state
     due_at  
