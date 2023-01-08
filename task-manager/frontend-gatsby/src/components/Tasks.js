@@ -78,8 +78,8 @@ const Tasks = () => {
                       <td>{item.due_at}</td>
                       <td>{currentUserName}</td>
                       <td>
-                        <Button variant="primary" onClick={(e) => navigate('tasks/task/editState?id='+item.id)}> Modifier</Button> {' '}
-                        <Button variant="primary" onClick={(e) => navigate('tasks/task/comment')}> Commenter</Button> {' '}
+                        <Button variant="primary" onClick={(e) => navigate(`tasks/task/editState?id=${item.id}`)}> Modifier</Button> {' '}
+                        <Button variant="primary" onClick={(e) => navigate(`tasks/task/comment?id=${item.id}`)}> Commenter</Button> {' '}
                       </td>
                     </tr>
                     );

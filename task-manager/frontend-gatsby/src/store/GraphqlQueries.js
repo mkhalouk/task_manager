@@ -71,6 +71,17 @@ query Assignees($where: AssigneeWhereInput) {
 }
 `
 
+export const GET_COMMENNT_BY_TASK_ID = gql`
+query Comments($where: CommentWhereInput) {
+  comments(where: $where) {
+    id
+    parent_id
+    content
+    owner_id
+  }
+}
+`
+
 export const LOGIN_USER_MUTATION = gql`
 mutation LoginUser($where: UserWhereInput) {
   loginUser(where: $where) {
